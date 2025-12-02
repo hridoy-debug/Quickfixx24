@@ -1,156 +1,28 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Quickfixx - Staff Login</title>
-    <link rel="stylesheet" href="brand-styles.css">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <style>
-        .login-container {
-            min-height: 100vh;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            background: linear-gradient(135deg, #F8FAFC 0%, #F1F5F9 100%);
-            padding: 20px;
-        }
+// Update the login function in staff-login.html
+function login() {
+    const staffId = document.getElementById('staffId').value;
+    const password = document.getElementById('password').value;
+    
+    // Demo credentials (in real app, this would be server-side)
+    const validCredentials = {
+        'admin001': 'admin@quickfixx2025',
+        'driver001': 'driver@quickfixx',
+        'tech002': 'tech@quickfixx',
+        'staff003': 'staff@quickfixx'
+    };
+    
+    if (validCredentials[staffId] && password === validCredentials[staffId]) {
+        // Set a cookie for dashboard access
+        document.cookie = "quickfixx_staff=true; path=/; max-age=28800"; // 8 hours
+        document.cookie = `staff_role=${staffId.startsWith('admin') ? 'admin' : 'staff'}; path=/; max-age=28800`;
         
-        .login-card {
-            background: white;
-            padding: 50px;
-            border-radius: 20px;
-            box-shadow: 0 20px 60px rgba(15, 23, 42, 0.1);
-            width: 100%;
-            max-width: 450px;
-            text-align: center;
+        // Redirect to appropriate dashboard based on role
+        if (staffId.startsWith('admin')) {
+            window.location.href = 'admin-logo-update.html';
+        } else {
+            window.location.href = 'staff-dashboard.html'; // We'll create this
         }
-        
-        .login-logo {
-            font-family: 'Poppins', sans-serif;
-            font-size: 2.5rem;
-            font-weight: 700;
-            color: #0F172A;
-            margin-bottom: 40px;
-        }
-        
-        .login-logo span {
-            color: #F59E0B;
-        }
-        
-        .input-group {
-            margin-bottom: 25px;
-            text-align: left;
-        }
-        
-        .input-group label {
-            display: block;
-            margin-bottom: 8px;
-            font-weight: 500;
-            color: #1E293B;
-        }
-        
-        .input-group input {
-            width: 100%;
-            padding: 15px 20px;
-            border: 2px solid #E2E8F0;
-            border-radius: 10px;
-            font-size: 16px;
-            transition: all 0.3s;
-        }
-        
-        .input-group input:focus {
-            outline: none;
-            border-color: #F59E0B;
-            box-shadow: 0 0 0 3px rgba(245, 158, 11, 0.1);
-        }
-        
-        .login-btn {
-            width: 100%;
-            padding: 16px;
-            background: linear-gradient(135deg, #F59E0B 0%, #EAB308 100%);
-            color: #0F172A;
-            border: none;
-            border-radius: 10px;
-            font-size: 16px;
-            font-weight: 600;
-            cursor: pointer;
-            transition: all 0.3s;
-            margin-top: 10px;
-        }
-        
-        .login-btn:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 10px 25px rgba(245, 158, 11, 0.3);
-        }
-        
-        .back-link {
-            display: inline-flex;
-            align-items: center;
-            gap: 8px;
-            color: #64748B;
-            text-decoration: none;
-            margin-top: 30px;
-            font-size: 0.95rem;
-        }
-        
-        .back-link:hover {
-            color: #0F172A;
-        }
-    </style>
-</head>
-<body>
-    <div class="login-container">
-        <div class="login-card">
-            <div class="login-logo">Quick<span>fixx</span> Staff</div>
-            
-            <div class="input-group">
-                <label for="staffId">Staff ID</label>
-                <input type="text" id="staffId" placeholder="Enter your staff ID">
-            </div>
-            
-            <div class="input-group">
-                <label for="password">Password</label>
-                <input type="password" id="password" placeholder="Enter your password">
-            </div>
-            
-            <button class="login-btn" onclick="login()">
-                <i class="fas fa-sign-in-alt"></i> Login to Dashboard
-            </button>
-            
-            <div style="margin-top: 20px; color: #94A3B8; font-size: 0.9rem;">
-                <i class="fas fa-info-circle"></i> Contact admin for credentials
-            </div>
-            
-            <a href="index.html" class="back-link">
-                <i class="fas fa-arrow-left"></i> Back to Main Website
-            </a>
-        </div>
-    </div>
-
-    <script>
-        function login() {
-            const staffId = document.getElementById('staffId').value;
-            const password = document.getElementById('password').value;
-            
-            // Simple demo login (in production, this should be server-side)
-            if (staffId && password) {
-                // Set a cookie for dashboard access (as expected by admin-logo-update.html)
-                document.cookie = "quickfixx_staff=true; path=/; max-age=28800"; // 8 hours
-                
-                // Redirect to admin dashboard
-                window.location.href = 'admin-logo-update.html';
-            } else {
-                alert('Please enter both Staff ID and Password');
-            }
-        }
-        
-        // Allow pressing Enter to login
-        document.addEventListener('keypress', function(e) {
-            if (e.key === 'Enter') {
-                login();
-            }
-        });
-    </script>
-</body>
-</html>
+    } else {
+        alert('Invalid Staff ID or Password. Try: admin001 / admin@quickfixx2025');
+    }
+}
