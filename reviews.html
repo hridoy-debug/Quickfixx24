@@ -3,257 +3,432 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Customer Reviews - Quickfixx</title>
+    <title>Quickfixx - Rewards & Loyalty Program</title>
+    <link rel="stylesheet" href="brand-styles.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
-        :root {
-            --primary-blue: #1a5fce;
-            --accent-orange: #ff6b35;
-            --light-gray: #f5f7fa;
-            --text-dark: #2d3748;
+        .rewards-page {
+            background: linear-gradient(135deg, #0F172A 0%, #1E293B 100%);
+            min-height: 100vh;
+            color: white;
+            padding: 30px 0;
         }
         
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-            font-family: 'Segoe UI', sans-serif;
-        }
-        
-        body {
-            background: var(--light-gray);
-            color: var(--text-dark);
-        }
-        
-        .container {
-            max-width: 1000px;
-            margin: 0 auto;
-            padding: 20px;
-        }
-        
-        .header {
+        .rewards-hero {
             text-align: center;
-            margin-bottom: 40px;
-            padding: 40px 0;
-            background: linear-gradient(135deg, #1a5fce 0%, #0d4ab5 100%);
-            color: white;
-            border-radius: 0 0 20px 20px;
+            padding: 80px 20px;
+            background: linear-gradient(135deg, rgba(245, 158, 11, 0.15) 0%, rgba(234, 179, 8, 0.1) 100%);
+            border-radius: 0 0 40px 40px;
+            margin-bottom: 50px;
         }
         
-        .logo {
-            font-size: 32px;
-            font-weight: 700;
-            margin-bottom: 10px;
-        }
-        
-        .logo span {
-            color: var(--accent-orange);
-        }
-        
-        .back-btn {
-            position: absolute;
-            top: 20px;
-            left: 20px;
-            color: white;
-            text-decoration: none;
-            display: inline-flex;
-            align-items: center;
-            gap: 8px;
-        }
-        
-        .review-form {
-            background: white;
-            padding: 30px;
-            border-radius: 10px;
-            box-shadow: 0 4px 12px rgba(0,0,0,0.05);
-            margin-bottom: 40px;
-        }
-        
-        .review-form h2 {
-            color: var(--primary-blue);
+        .rewards-hero h1 {
+            font-size: 3.5rem;
             margin-bottom: 20px;
         }
         
-        .form-control {
-            width: 100%;
-            padding: 12px;
-            margin-bottom: 15px;
-            border: 1px solid #d1d5db;
-            border-radius: 6px;
+        .rewards-hero h1 span {
+            color: #F59E0B;
         }
         
-        .stars {
+        .points-display {
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(10px);
+            border-radius: 20px;
+            padding: 40px;
+            max-width: 600px;
+            margin: 40px auto;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+        }
+        
+        .points-value {
+            font-size: 4rem;
+            font-weight: 700;
+            color: #F59E0B;
+            margin: 20px 0;
+        }
+        
+        .tier-badge {
+            display: inline-block;
+            padding: 10px 25px;
+            border-radius: 30px;
+            font-weight: 600;
+            margin: 20px 0;
+            font-size: 1.1rem;
+        }
+        
+        .tier-bronze { background: linear-gradient(135deg, #92400E 0%, #B45309 100%); }
+        .tier-silver { background: linear-gradient(135deg, #374151 0%, #6B7280 100%); }
+        .tier-gold { background: linear-gradient(135deg, #F59E0B 0%, #EAB308 100%); color: #0F172A; }
+        .tier-platinum { background: linear-gradient(135deg, #10B981 0%, #059669 100%); }
+        
+        .rewards-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 30px;
+            padding: 0 20px;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+        
+        .reward-card {
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 20px;
+            padding: 30px;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            transition: all 0.3s;
+        }
+        
+        .reward-card:hover {
+            transform: translateY(-10px);
+            border-color: #F59E0B;
+            background: rgba(245, 158, 11, 0.1);
+        }
+        
+        .reward-card h3 {
+            color: #F59E0B;
+            margin-bottom: 15px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        
+        .reward-points {
+            background: rgba(245, 158, 11, 0.2);
+            color: #F59E0B;
+            padding: 8px 20px;
+            border-radius: 20px;
+            display: inline-block;
+            font-weight: 600;
             margin: 15px 0;
         }
         
-        .star {
-            font-size: 24px;
-            color: #e5e7eb;
-            cursor: pointer;
-            margin-right: 5px;
+        .progress-section {
+            max-width: 800px;
+            margin: 50px auto;
+            padding: 0 20px;
         }
         
-        .star.selected {
-            color: #f59e0b;
+        .progress-bar {
+            height: 20px;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 10px;
+            margin: 30px 0;
+            overflow: hidden;
         }
         
-        .submit-btn {
-            background: var(--primary-blue);
-            color: white;
-            border: none;
-            padding: 12px 30px;
-            border-radius: 6px;
-            font-weight: 600;
-            cursor: pointer;
+        .progress-fill {
+            height: 100%;
+            background: linear-gradient(90deg, #F59E0B 0%, #EAB308 100%);
+            border-radius: 10px;
+            transition: width 0.5s ease;
         }
         
-        .reviews-list {
+        .progress-labels {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 10px;
+            color: #94A3B8;
+        }
+        
+        .how-it-works {
+            max-width: 1000px;
+            margin: 80px auto;
+            padding: 0 20px;
+        }
+        
+        .steps-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 30px;
             margin-top: 40px;
         }
         
-        .review-card {
-            background: white;
-            padding: 25px;
-            border-radius: 10px;
-            box-shadow: 0 4px 12px rgba(0,0,0,0.05);
-            margin-bottom: 20px;
+        .step-card {
+            text-align: center;
+            padding: 30px;
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 15px;
         }
         
-        .review-header {
+        .step-number {
+            width: 50px;
+            height: 50px;
+            background: #F59E0B;
+            color: #0F172A;
+            border-radius: 50%;
             display: flex;
-            justify-content: space-between;
             align-items: center;
-            margin-bottom: 15px;
-        }
-        
-        .reviewer {
-            font-weight: 600;
-            color: var(--text-dark);
-        }
-        
-        .review-date {
-            color: #6b7280;
-            font-size: 0.9rem;
-        }
-        
-        .review-stars {
-            color: #f59e0b;
-            margin: 10px 0;
-        }
-        
-        @media (max-width: 768px) {
-            .container {
-                padding: 10px;
-            }
-            
-            .header {
-                padding: 60px 20px 40px;
-            }
-            
-            .review-form {
-                padding: 20px;
-            }
+            justify-content: center;
+            font-size: 1.5rem;
+            font-weight: 700;
+            margin: 0 auto 20px;
         }
     </style>
 </head>
-<body>
+<body class="rewards-page">
     <!-- Header -->
-    <div class="header">
-        <a href="index.html" class="back-btn">
-            <i class="fas fa-arrow-left"></i> Back
-        </a>
-        <div class="logo">
-            <i class="fas fa-tools"></i>
-            Quick<span>fixx</span> Reviews
-        </div>
-        <p>What our customers say about our services</p>
-    </div>
-    
-    <div class="container">
-        <!-- Submit Review Form -->
-        <div class="review-form">
-            <h2>Submit Your Review</h2>
-            <p>Help others by sharing your experience with Quickfixx</p>
+    <header class="site-header">
+        <div class="container header-container">
+            <a href="index.html" class="logo-container">
+                <img src="assets/images/logo-main.png" alt="Quickfixx" class="logo-img" id="mainLogo">
+                <div class="logo-text">Quick<span>fixx</span></div>
+            </a>
             
-            <!-- Replace with your Google Form link -->
-            <iframe src="https://docs.google.com/forms/d/e/1FAIpQLScCCwVpDsAdunuz88XLTjEF7SKksuI2Jx2LbTsaBzFs3nDVQQ/viewform?embedded=true"
-                width="100%" height="600" frameborder="0" marginheight="0" marginwidth="0"
-                >Loading…
-            </iframe>
-            <p style="text-align: center; margin-top: 20px; color: #666;">
-                <small>Your review will appear after approval</small>
+            <nav class="main-nav">
+                <div class="nav-links">
+                    <a href="index.html" class="nav-link">Home</a>
+                    <a href="dashboard.html" class="nav-link">Dashboard</a>
+                    <a href="reviews.html" class="nav-link">Reviews</a>
+                    <a href="staff-login.html" class="btn btn-secondary">Staff Login</a>
+                </div>
+            </nav>
+        </div>
+    </header>
+
+    <!-- Hero Section -->
+    <section class="rewards-hero">
+        <div class="container">
+            <h1>Quick<span>fixx</span> Rewards</h1>
+            <p style="font-size: 1.2rem; opacity: 0.9; max-width: 600px; margin: 0 auto;">
+                Earn points with every service, redeem for discounts and exclusive benefits!
             </p>
+            
+            <div class="points-display">
+                <h3>Your Rewards Balance</h3>
+                <div class="points-value" id="userPoints">1,250</div>
+                <div class="tier-badge tier-gold">GOLD TIER</div>
+                <p>You're saving an average of 15% on every service!</p>
+                
+                <div style="margin-top: 30px;">
+                    <button onclick="showRedeemOptions()" class="btn btn-primary" style="background: #F59E0B; color: #0F172A;">
+                        <i class="fas fa-gift"></i> Redeem Points
+                    </button>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Rewards Section -->
+    <section class="container">
+        <h2 style="text-align: center; margin-bottom: 40px; font-size: 2.5rem;">
+            Available Rewards
+        </h2>
+        
+        <div class="rewards-grid">
+            <!-- Reward 1 -->
+            <div class="reward-card">
+                <h3><i class="fas fa-percentage"></i> Service Discount</h3>
+                <div class="reward-points">500 Points</div>
+                <p>Get 10% off your next service booking. Perfect for regular maintenance.</p>
+                <button onclick="redeemReward(1)" class="btn btn-secondary" style="width: 100%; margin-top: 20px;">
+                    Redeem Now
+                </button>
+            </div>
+            
+            <!-- Reward 2 -->
+            <div class="reward-card">
+                <h3><i class="fas fa-bolt"></i> Priority Service</h3>
+                <div class="reward-points">750 Points</div>
+                <p>Jump to the front of the queue for your next booking. Emergency response guaranteed.</p>
+                <button onclick="redeemReward(2)" class="btn btn-secondary" style="width: 100%; margin-top: 20px;">
+                    Redeem Now
+                </button>
+            </div>
+            
+            <!-- Reward 3 -->
+            <div class="reward-card">
+                <h3><i class="fas fa-car"></i> Free Car Wash</h3>
+                <div class="reward-points">1,000 Points</div>
+                <p>Complimentary premium car wash with any vehicle booking service.</p>
+                <button onclick="redeemReward(3)" class="btn btn-secondary" style="width: 100%; margin-top: 20px;">
+                    Redeem Now
+                </button>
+            </div>
+            
+            <!-- Reward 4 -->
+            <div class="reward-card">
+                <h3><i class="fas fa-home"></i> Annual Maintenance</h3>
+                <div class="reward-points">2,500 Points</div>
+                <p>Free annual checkup for all home services. Electrical, plumbing, and AC included.</p>
+                <button onclick="redeemReward(4)" class="btn btn-secondary" style="width: 100%; margin-top: 20px;">
+                    Redeem Now
+                </button>
+            </div>
+            
+            <!-- Reward 5 -->
+            <div class="reward-card">
+                <h3><i class="fas fa-plane"></i> Airport Transfer</h3>
+                <div class="reward-points">1,500 Points</div>
+                <p>Free airport transfer service for you and your family. Up to 3 suitcases included.</p>
+                <button onclick="redeemReward(5)" class="btn btn-secondary" style="width: 100%; margin-top: 20px;">
+                    Redeem Now
+                </button>
+            </div>
+            
+            <!-- Reward 6 -->
+            <div class="reward-card">
+                <h3><i class="fas fa-crown"></i> Platinum Upgrade</h3>
+                <div class="reward-points">5,000 Points</div>
+                <p>Upgrade to Platinum tier for 6 months with exclusive benefits and priority support.</p>
+                <button onclick="redeemReward(6)" class="btn btn-secondary" style="width: 100%; margin-top: 20px;">
+                    Redeem Now
+                </button>
+            </div>
+        </div>
+    </section>
+
+    <!-- Progress Section -->
+    <section class="progress-section">
+        <h2 style="text-align: center; margin-bottom: 40px; font-size: 2rem;">
+            Your Progress to Next Tier
+        </h2>
+        
+        <div class="progress-bar">
+            <div class="progress-fill" id="progressFill" style="width: 65%;"></div>
         </div>
         
-        <!-- Reviews Display -->
-        <div class="reviews-list">
-            <h2>Customer Reviews</h2>
-            
-            <div class="review-card">
-                <div class="review-header">
-                    <div class="reviewer">Mr. Rahman, Gulshan</div>
-                    <div class="review-date">December 5, 2025</div>
-                </div>
-                <div class="review-stars">
-                    <i class="fas fa-star"></i>
-                    <i class="fas fa-star"></i>
-                    <i class="fas fa-star"></i>
-                    <i class="fas fa-star"></i>
-                    <i class="fas fa-star"></i>
-                </div>
-                <p>"Excellent CCTV installation service! The technician was professional and completed the job quickly. Highly recommend Quickfixx!"</p>
-                <p><small>Service: CCTV Installation</small></p>
+        <div class="progress-labels">
+            <div>Gold Tier<br><strong>1,000 pts</strong></div>
+            <div>Current: 1,250 pts</div>
+            <div>Platinum Tier<br><strong>2,000 pts</strong></div>
+        </div>
+        
+        <p style="text-align: center; margin-top: 30px; color: #94A3B8;">
+            <i class="fas fa-bolt"></i> 750 more points to reach Platinum tier!
+        </p>
+    </section>
+
+    <!-- How It Works -->
+    <section class="how-it-works">
+        <h2 style="text-align: center; margin-bottom: 40px; font-size: 2.5rem;">
+            How to Earn Points
+        </h2>
+        
+        <div class="steps-grid">
+            <div class="step-card">
+                <div class="step-number">1</div>
+                <h3>Book Services</h3>
+                <p>Earn 50 points for every service booking completed.</p>
             </div>
             
-            <div class="review-card">
-                <div class="review-header">
-                    <div class="reviewer">Ms. Ahmed, Banani</div>
-                    <div class="review-date">December 3, 2025</div>
-                </div>
-                <div class="review-stars">
-                    <i class="fas fa-star"></i>
-                    <i class="fas fa-star"></i>
-                    <i class="fas fa-star"></i>
-                    <i class="fas fa-star"></i>
-                    <i class="fas fa-star-half-alt"></i>
-                </div>
-                <p>"Smart home setup was done perfectly. They transformed my apartment with modern automation. Very satisfied with their work."</p>
-                <p><small>Service: Smart Home Setup</small></p>
+            <div class="step-card">
+                <div class="step-number">2</div>
+                <h3>Write Reviews</h3>
+                <p>Get 25 points for each verified review you submit.</p>
             </div>
             
-            <div class="review-card">
-                <div class="review-header">
-                    <div class="reviewer">Tech Solutions Ltd.</div>
-                    <div class="review-date">November 28, 2025</div>
-                </div>
-                <div class="review-stars">
-                    <i class="fas fa-star"></i>
-                    <i class="fas fa-star"></i>
-                    <i class="fas fa-star"></i>
-                    <i class="fas fa-star"></i>
-                    <i class="fas fa-star"></i>
-                </div>
-                <p>"Quickfixx provided IT support for our office network. Fast response and professional service. Will use them again for sure."</p>
-                <p><small>Service: IT Support</small></p>
+            <div class="step-card">
+                <div class="step-number">3</div>
+                <h3>Refer Friends</h3>
+                <p>Earn 100 points for every friend who books their first service.</p>
+            </div>
+            
+            <div class="step-card">
+                <div class="step-number">4</div>
+                <h3>Repeat Business</h3>
+                <p>Loyal customers earn double points after 5 bookings.</p>
             </div>
         </div>
-    </div>
-    
+    </section>
+
+    <!-- Footer -->
+    <footer class="site-footer">
+        <div class="container">
+            <div class="footer-grid">
+                <div>
+                    <div class="footer-logo">Quick<span>fixx</span></div>
+                    <p>Rewards program terms and conditions apply. Points expire after 12 months of inactivity.</p>
+                </div>
+                
+                <div>
+                    <h3 class="footer-heading">Rewards Info</h3>
+                    <ul class="footer-links">
+                        <li><a href="#tiers">Tier Benefits</a></li>
+                        <li><a href="#earn">How to Earn</a></li>
+                        <li><a href="#redeem">How to Redeem</a></li>
+                        <li><a href="#terms">Terms & Conditions</a></li>
+                    </ul>
+                </div>
+                
+                <div>
+                    <h3 class="footer-heading">Contact</h3>
+                    <ul class="footer-links">
+                        <li><i class="fas fa-phone"></i> +880 1537-313652</li>
+                        <li><i class="fas fa-envelope"></i> rewards@quickfixx.com</li>
+                        <li><i class="fas fa-clock"></i> Support: 9AM-8PM</li>
+                    </ul>
+                </div>
+            </div>
+            
+            <div class="footer-bottom">
+                <p>&copy; 2025 Quickfixx Rewards Program. Points have no cash value.</p>
+            </div>
+        </div>
+    </footer>
+
     <script>
-        // Star rating system
-        const stars = document.querySelectorAll('.star');
-        stars.forEach(star => {
-            star.addEventListener('click', function() {
-                const rating = this.getAttribute('data-value');
-                stars.forEach(s => {
-                    if(s.getAttribute('data-value') <= rating) {
-                        s.classList.add('selected');
-                    } else {
-                        s.classList.remove('selected');
-                    }
-                });
-            });
-        });
+        // Rewards functionality
+        function showRedeemOptions() {
+            const points = parseInt(document.getElementById('userPoints').textContent.replace(/,/g, ''));
+            
+            if (points < 500) {
+                alert(`You need at least 500 points to redeem rewards. You have ${points} points.`);
+                return;
+            }
+            
+            // Show redemption modal
+            alert(`Available for redemption:\n\n• 500 pts - 10% Service Discount\n• 750 pts - Priority Service\n• 1,000 pts - Free Car Wash\n• 1,500 pts - Airport Transfer\n• 2,500 pts - Annual Maintenance\n• 5,000 pts - Platinum Upgrade`);
+        }
+        
+        function redeemReward(rewardId) {
+            const rewards = {
+                1: { name: '10% Service Discount', cost: 500 },
+                2: { name: 'Priority Service', cost: 750 },
+                3: { name: 'Free Car Wash', cost: 1000 },
+                4: { name: 'Annual Maintenance', cost: 2500 },
+                5: { name: 'Airport Transfer', cost: 1500 },
+                6: { name: 'Platinum Upgrade', cost: 5000 }
+            };
+            
+            const reward = rewards[rewardId];
+            const currentPoints = parseInt(document.getElementById('userPoints').textContent.replace(/,/g, ''));
+            
+            if (currentPoints >= reward.cost) {
+                if (confirm(`Redeem ${reward.name} for ${reward.cost} points?`)) {
+                    const newPoints = currentPoints - reward.cost;
+                    document.getElementById('userPoints').textContent = newPoints.toLocaleString();
+                    
+                    // Update progress bar
+                    const progress = Math.min(100, ((newPoints - 1000) / 1000) * 100);
+                    document.getElementById('progressFill').style.width = `${progress}%`;
+                    
+                    alert(`Success! ${reward.name} redeemed. Your new balance: ${newPoints} points.`);
+                    
+                    // Save redemption
+                    const redemptions = JSON.parse(localStorage.getItem('quickfixx-redemptions') || '[]');
+                    redemptions.push({
+                        reward: reward.name,
+                        points: reward.cost,
+                        date: new Date().toISOString()
+                    });
+                    localStorage.setItem('quickfixx-redemptions', JSON.stringify(redemptions));
+                }
+            } else {
+                alert(`You need ${reward.cost} points for this reward. You have ${currentPoints} points.`);
+            }
+        }
+        
+        // Load user points from localStorage
+        function loadUserPoints() {
+            const savedPoints = localStorage.getItem('quickfixx-rewards-points');
+            if (savedPoints) {
+                document.getElementById('userPoints').textContent = parseInt(savedPoints).toLocaleString();
+            }
+        }
+        
+        // Initialize
+        window.onload = loadUserPoints;
     </script>
 </body>
 </html>
